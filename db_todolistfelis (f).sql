@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 21, 2025 at 01:53 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Apr 08, 2025 at 01:16 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,9 +32,7 @@ CREATE TABLE `subtasks` (
   `task_id` int(11) NOT NULL,
   `subtask` varchar(255) NOT NULL,
   `status` tinyint(1) DEFAULT 0,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `priority` int(11) DEFAULT 2,
+  `priority` enum('Tinggi','Sedang','Rendah') NOT NULL DEFAULT 'Tinggi',
   `deadline` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -42,24 +40,8 @@ CREATE TABLE `subtasks` (
 -- Dumping data for table `subtasks`
 --
 
-INSERT INTO `subtasks` (`id`, `task_id`, `subtask`, `status`, `created_at`, `updated_at`, `priority`, `deadline`) VALUES
-(12, 4, 'Transalasi', 1, '2025-02-12 03:32:43', '2025-02-21 10:59:52', 2, NULL),
-(13, 4, 'Transalasi', 0, '2025-02-12 03:32:46', '2025-02-12 03:32:46', 2, NULL),
-(14, 4, 'Transalasi', 0, '2025-02-12 03:33:40', '2025-02-12 03:33:40', 2, NULL),
-(15, 4, 'Transalasi', 0, '2025-02-12 03:33:46', '2025-02-12 03:33:46', 2, NULL),
-(16, 4, 'Transalasi', 0, '2025-02-12 03:34:30', '2025-02-12 03:34:30', 2, NULL),
-(20, 3, 'Cerpen', 0, '2025-02-12 03:46:26', '2025-02-12 03:46:26', 2, NULL),
-(21, 3, 'Transalasi', 0, '2025-02-12 04:08:25', '2025-02-12 04:08:25', 2, NULL),
-(22, 3, 'Perkalian', 0, '2025-02-12 04:10:57', '2025-02-12 04:10:57', 2, NULL),
-(23, 3, 'Perkalian', 0, '2025-02-12 04:11:01', '2025-02-12 04:11:01', 2, NULL),
-(24, 3, 'Perkalian', 0, '2025-02-12 04:11:12', '2025-02-12 04:11:12', 2, NULL),
-(25, 3, 'Perkalian', 0, '2025-02-12 04:13:46', '2025-02-12 04:13:46', 2, NULL),
-(26, 3, 'Transalasi', 0, '2025-02-12 04:18:44', '2025-02-12 04:18:44', 3, '2025-02-13'),
-(29, 5, 'Cerpen', 0, '2025-02-19 07:57:21', '2025-02-19 07:57:21', 2, NULL),
-(51, 1, 'dialog', 1, '2025-02-21 08:57:46', '2025-02-21 10:17:23', 1, '2025-03-07'),
-(58, 4, 'felisa meencuci piring', 0, '2025-02-21 10:51:53', '2025-02-21 10:51:53', 3, '2025-02-22'),
-(61, 1, 'Perkalian', 0, '2025-02-21 11:25:30', '2025-02-21 11:25:30', 2, '2025-02-22'),
-(62, 27, 'dialog', 1, '2025-02-21 12:30:24', '2025-02-21 12:30:26', 1, '2025-02-24');
+INSERT INTO `subtasks` (`id`, `task_id`, `subtask`, `status`, `priority`, `deadline`) VALUES
+(2, 6, 'Biologi', 1, 'Sedang', '2025-04-19');
 
 -- --------------------------------------------------------
 
@@ -85,11 +67,9 @@ INSERT INTO `tasks` (`id`, `user_id`, `task`, `status`, `deadline`, `created_at`
 (1, 1, 'jepang', 0, '2025-02-19', '2025-02-11 04:50:05', '2025-02-11 04:50:05'),
 (3, 1, 'inggris', 0, '2025-02-13', '2025-02-11 04:50:39', '2025-02-11 04:50:39'),
 (4, 1, 'IPS', 0, '2025-02-19', '2025-02-11 04:50:53', '2025-02-11 04:50:53'),
-(5, 1, 'B.Indonesia', 0, '2025-02-12', '2025-02-12 03:17:52', '2025-02-12 03:17:52'),
-(7, 1, 'IPA', 0, '2025-02-20', '2025-02-20 01:38:32', '2025-02-20 01:38:32'),
-(8, 1, 'B.Korea', 0, NULL, '2025-02-20 01:51:58', '2025-02-20 01:51:58'),
-(27, 2, 'B.Korea', 0, NULL, '2025-02-21 12:13:01', '2025-02-21 12:13:01'),
-(28, 2, 'jepang', 0, NULL, '2025-02-21 12:30:08', '2025-02-21 12:30:08');
+(5, 2, 'jepang', 0, NULL, '2025-03-09 05:46:44', '2025-03-09 05:46:44'),
+(6, 3, 'IPA', 0, NULL, '2025-04-08 10:15:31', '2025-04-08 10:15:31'),
+(7, 4, 'IPA', 0, NULL, '2025-04-08 10:43:11', '2025-04-08 10:43:11');
 
 -- --------------------------------------------------------
 
@@ -112,7 +92,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `created_at`, `updated_at`) VALUES
 (1, 'felisa putri', 'felisa15@gmail.com', '$2y$10$3l8y0hiiL5ENO35N953Q4uZIY0MiPPJUiffQ4HqV8vFF4Yf1eCnm.', '2025-02-11 04:49:39', '2025-02-11 04:49:39'),
-(2, 'felisaputri', 'felisa123@gmail.com', '$2y$10$u4WvWyvRi5GQDd5SCwHAXuJMOm4XGYKaZodBTSEZPFvb9yCTHluE6', '2025-02-21 12:12:44', '2025-02-21 12:12:44');
+(2, 'puput', 'neng123@gmail.com', '$2y$10$xKWOOokyU89FjVR2OMPHYuFzP5jPSvt5tNbmf7Vedux2SMb3ku1XS', '2025-03-09 05:46:11', '2025-03-09 05:46:11'),
+(3, 'Sheza', 'shezaa00@gmail.com', '$2y$10$2uWm9lNXPEaebh1nbcjOSuluaWtU9/koJM/6i139w6JEVby4o6EgG', '2025-04-08 10:14:50', '2025-04-08 10:14:50'),
+(4, 'felisaputri', 'felisa23@gmail.com', '$2y$10$GYbsUhuwse4Ctsz/GYzSquZObhWrcdX9C0LznNFbgn70Pud5dwOLy', '2025-04-08 10:42:49', '2025-04-08 10:42:49');
 
 --
 -- Indexes for dumped tables
@@ -148,19 +130,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `subtasks`
 --
 ALTER TABLE `subtasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
